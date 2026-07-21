@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /
+
+Disallow: /_authenticated/
+Disallow: /dashboard
+Disallow: /appointments
+Disallow: /records
+Disallow: /prescriptions
+Disallow: /bills
+Disallow: /notifications
+Disallow: /profile

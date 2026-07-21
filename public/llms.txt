@@ -1,0 +1,25 @@
+# HealthCuree AI
+
+> AI-powered hospital management system for appointments, medical records, prescriptions, billing, and instant AI symptom triage. Serving Kakinada, Andhra Pradesh, India.
+
+## Pages
+- [Home](/): Overview, featured doctors, departments, contact
+- [About](/about): Mission, vision, values
+- [Departments](/departments): Clinical specialties
+- [Doctors](/doctors): Specialist directory with search
+- [Services](/services): Full list of hospital services
+- [Emergency Care](/emergency): 24/7 emergency and ambulance
+- [Pharmacy](/pharmacy): In-house pharmacy details
+- [Laboratory](/laboratory): Diagnostics and pathology
+- [Health Packages](/health-packages): Preventive check-ups
+- [Testimonials](/testimonials): Patient stories
+- [Blog](/blog): Doctor-authored health articles
+- [Gallery](/gallery): Facilities and events
+- [FAQ](/faq): Common questions
+- [Careers](/careers): Job openings
+- [Contact](/contact): Contact form, phone, email, map
+- [AI Health Assistant](/ai-assistant): AI-guided symptom analysis
+
+## Optional
+- [Privacy Policy](/privacy)
+- [Terms & Conditions](/terms)
