@@ -55,6 +55,22 @@ function Dashboard() {
         </div>
       </div>
 
+      {!donorLoading && !donor && (
+        <Card className="border-primary/30 bg-primary/5">
+          <CardContent className="p-5 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0"><Droplet className="h-5 w-5 text-primary" /></div>
+              <div>
+                <div className="font-semibold">Complete your blood donor details</div>
+                <p className="text-sm text-muted-foreground">Add your blood group, city and state so patients in need can reach you.</p>
+              </div>
+            </div>
+            <Button asChild className="bg-gradient-primary text-primary-foreground"><Link to="/blood-donor">Complete now</Link></Button>
+          </CardContent>
+        </Card>
+      )}
+
+
       <div className="grid gap-4 sm:grid-cols-3">
         {stats.map((s) => (
           <Link key={s.label} to={s.to}>
