@@ -27,6 +27,7 @@ const nav = [
   { to: "/records", label: "Medical Records", icon: FileText },
   { to: "/prescriptions", label: "Prescriptions", icon: Pill },
   { to: "/bills", label: "Bills", icon: CreditCard },
+  { to: "/blood-donor", label: "Blood Donor", icon: Droplet },
   { to: "/ai-assistant", label: "AI Assistant", icon: Bot },
   { to: "/notifications", label: "Notifications", icon: Bell },
   { to: "/profile", label: "Profile", icon: UserIcon },
