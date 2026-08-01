@@ -24,6 +24,7 @@ import { Route as DoctorsRouteImport } from './routes/doctors'
 import { Route as DepartmentsRouteImport } from './routes/departments'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
+import { Route as BloodBankRouteImport } from './routes/blood-bank'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AiAssistantRouteImport } from './routes/ai-assistant'
@@ -114,6 +115,11 @@ const CareersRoute = CareersRouteImport.update({
   path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BloodBankRoute = BloodBankRouteImport.update({
+  id: '/blood-bank',
+  path: '/blood-bank',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -193,6 +199,7 @@ export interface FileRoutesByFullPath {
   '/ai-assistant': typeof AiAssistantRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/blood-bank': typeof BloodBankRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/departments': typeof DepartmentsRoute
@@ -223,6 +230,7 @@ export interface FileRoutesByTo {
   '/ai-assistant': typeof AiAssistantRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/blood-bank': typeof BloodBankRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/departments': typeof DepartmentsRoute
@@ -255,6 +263,7 @@ export interface FileRoutesById {
   '/ai-assistant': typeof AiAssistantRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/blood-bank': typeof BloodBankRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/departments': typeof DepartmentsRoute
@@ -287,6 +296,7 @@ export interface FileRouteTypes {
     | '/ai-assistant'
     | '/auth'
     | '/blog'
+    | '/blood-bank'
     | '/careers'
     | '/contact'
     | '/departments'
@@ -317,6 +327,7 @@ export interface FileRouteTypes {
     | '/ai-assistant'
     | '/auth'
     | '/blog'
+    | '/blood-bank'
     | '/careers'
     | '/contact'
     | '/departments'
@@ -348,6 +359,7 @@ export interface FileRouteTypes {
     | '/ai-assistant'
     | '/auth'
     | '/blog'
+    | '/blood-bank'
     | '/careers'
     | '/contact'
     | '/departments'
@@ -380,6 +392,7 @@ export interface RootRouteChildren {
   AiAssistantRoute: typeof AiAssistantRoute
   AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRoute
+  BloodBankRoute: typeof BloodBankRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
   DepartmentsRoute: typeof DepartmentsRoute
@@ -502,6 +515,13 @@ declare module '@tanstack/react-router' {
       path: '/careers'
       fullPath: '/careers'
       preLoaderRoute: typeof CareersRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/blood-bank': {
+      id: '/blood-bank'
+      path: '/blood-bank'
+      fullPath: '/blood-bank'
+      preLoaderRoute: typeof BloodBankRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/blog': {
@@ -637,6 +657,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiAssistantRoute: AiAssistantRoute,
   AuthRoute: AuthRoute,
   BlogRoute: BlogRoute,
+  BloodBankRoute: BloodBankRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
   DepartmentsRoute: DepartmentsRoute,
