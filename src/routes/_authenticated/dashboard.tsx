@@ -3,7 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Calendar, FileText, Pill, Bot, CreditCard, Bell, ArrowRight } from "lucide-react";
+import { Calendar, FileText, Pill, Bot, CreditCard, Bell, ArrowRight, Droplet } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/dashboard")({
   component: Dashboard,
@@ -26,6 +26,14 @@ function Dashboard() {
     queryKey: ["my-notifs"],
     queryFn: async () => (await supabase.from("notifications").select("*").eq("read", false)).data ?? [],
   });
+  const { data: donor, isLoading: donorLoading } = useQuery({
+    queryKey: ["my-donor"],
+    queryFn: async () => {
+      const u = (await supabase.auth.getUser()).data.user;
+      if (!u) return null;
+      return (await supabase.from("blood_donors").select("*").eq("user_id", u.id).maybeSingle()).data;
+    },
+  });
 
   const name = (user?.user_metadata?.full_name as string) || user?.email?.split("@")[0] || "there";
 
@@ -46,6 +54,22 @@ function Dashboard() {
           <Button asChild variant="outline" className="border-white/50 bg-white/10 text-white hover:bg-white/20"><Link to="/ai-assistant"><Bot className="h-4 w-4" /> AI Assistant</Link></Button>
         </div>
       </div>
+
+      {!donorLoading && !donor && (
+        <Card className="border-primary/30 bg-primary/5">
+          <CardContent className="p-5 flex flex-wrap items-center justify-between gap-4">
+            <div className="flex items-start gap-3">
+              <div className="h-11 w-11 rounded-xl bg-primary/10 flex items-center justify-center shrink-0"><Droplet className="h-5 w-5 text-primary" /></div>
+              <div>
+                <div className="font-semibold">Complete your blood donor details</div>
+                <p className="text-sm text-muted-foreground">Add your blood group, city and state so patients in need can reach you.</p>
+              </div>
+            </div>
+            <Button asChild className="bg-gradient-primary text-primary-foreground"><Link to="/blood-donor">Complete now</Link></Button>
+          </CardContent>
+        </Card>
+      )}
+
 
       <div className="grid gap-4 sm:grid-cols-3">
         {stats.map((s) => (

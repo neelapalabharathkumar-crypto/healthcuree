@@ -24,6 +24,7 @@ import { Route as DoctorsRouteImport } from './routes/doctors'
 import { Route as DepartmentsRouteImport } from './routes/departments'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as CareersRouteImport } from './routes/careers'
+import { Route as BloodBankRouteImport } from './routes/blood-bank'
 import { Route as BlogRouteImport } from './routes/blog'
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as AiAssistantRouteImport } from './routes/ai-assistant'
@@ -36,6 +37,7 @@ import { Route as AuthenticatedPrescriptionsRouteImport } from './routes/_authen
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated/book'
+import { Route as AuthenticatedBloodDonorRouteImport } from './routes/_authenticated/blood-donor'
 import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
 import { Route as AuthenticatedAppointmentsRouteImport } from './routes/_authenticated/appointments'
 
@@ -114,6 +116,11 @@ const CareersRoute = CareersRouteImport.update({
   path: '/careers',
   getParentRoute: () => rootRouteImport,
 } as any)
+const BloodBankRoute = BloodBankRouteImport.update({
+  id: '/blood-bank',
+  path: '/blood-bank',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const BlogRoute = BlogRouteImport.update({
   id: '/blog',
   path: '/blog',
@@ -175,6 +182,11 @@ const AuthenticatedBookRoute = AuthenticatedBookRouteImport.update({
   path: '/book',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedBloodDonorRoute = AuthenticatedBloodDonorRouteImport.update({
+  id: '/blood-donor',
+  path: '/blood-donor',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedBillsRoute = AuthenticatedBillsRouteImport.update({
   id: '/bills',
   path: '/bills',
@@ -193,6 +205,7 @@ export interface FileRoutesByFullPath {
   '/ai-assistant': typeof AiAssistantRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/blood-bank': typeof BloodBankRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/departments': typeof DepartmentsRoute
@@ -210,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/testimonials': typeof TestimonialsRoute
   '/appointments': typeof AuthenticatedAppointmentsRoute
   '/bills': typeof AuthenticatedBillsRoute
+  '/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -223,6 +237,7 @@ export interface FileRoutesByTo {
   '/ai-assistant': typeof AiAssistantRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/blood-bank': typeof BloodBankRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/departments': typeof DepartmentsRoute
@@ -240,6 +255,7 @@ export interface FileRoutesByTo {
   '/testimonials': typeof TestimonialsRoute
   '/appointments': typeof AuthenticatedAppointmentsRoute
   '/bills': typeof AuthenticatedBillsRoute
+  '/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -255,6 +271,7 @@ export interface FileRoutesById {
   '/ai-assistant': typeof AiAssistantRoute
   '/auth': typeof AuthRoute
   '/blog': typeof BlogRoute
+  '/blood-bank': typeof BloodBankRoute
   '/careers': typeof CareersRoute
   '/contact': typeof ContactRoute
   '/departments': typeof DepartmentsRoute
@@ -272,6 +289,7 @@ export interface FileRoutesById {
   '/testimonials': typeof TestimonialsRoute
   '/_authenticated/appointments': typeof AuthenticatedAppointmentsRoute
   '/_authenticated/bills': typeof AuthenticatedBillsRoute
+  '/_authenticated/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/_authenticated/book': typeof AuthenticatedBookRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
@@ -287,6 +305,7 @@ export interface FileRouteTypes {
     | '/ai-assistant'
     | '/auth'
     | '/blog'
+    | '/blood-bank'
     | '/careers'
     | '/contact'
     | '/departments'
@@ -304,6 +323,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/appointments'
     | '/bills'
+    | '/blood-donor'
     | '/book'
     | '/dashboard'
     | '/notifications'
@@ -317,6 +337,7 @@ export interface FileRouteTypes {
     | '/ai-assistant'
     | '/auth'
     | '/blog'
+    | '/blood-bank'
     | '/careers'
     | '/contact'
     | '/departments'
@@ -334,6 +355,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/appointments'
     | '/bills'
+    | '/blood-donor'
     | '/book'
     | '/dashboard'
     | '/notifications'
@@ -348,6 +370,7 @@ export interface FileRouteTypes {
     | '/ai-assistant'
     | '/auth'
     | '/blog'
+    | '/blood-bank'
     | '/careers'
     | '/contact'
     | '/departments'
@@ -365,6 +388,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/_authenticated/appointments'
     | '/_authenticated/bills'
+    | '/_authenticated/blood-donor'
     | '/_authenticated/book'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
@@ -380,6 +404,7 @@ export interface RootRouteChildren {
   AiAssistantRoute: typeof AiAssistantRoute
   AuthRoute: typeof AuthRoute
   BlogRoute: typeof BlogRoute
+  BloodBankRoute: typeof BloodBankRoute
   CareersRoute: typeof CareersRoute
   ContactRoute: typeof ContactRoute
   DepartmentsRoute: typeof DepartmentsRoute
@@ -504,6 +529,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof CareersRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/blood-bank': {
+      id: '/blood-bank'
+      path: '/blood-bank'
+      fullPath: '/blood-bank'
+      preLoaderRoute: typeof BloodBankRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/blog': {
       id: '/blog'
       path: '/blog'
@@ -588,6 +620,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBookRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/blood-donor': {
+      id: '/_authenticated/blood-donor'
+      path: '/blood-donor'
+      fullPath: '/blood-donor'
+      preLoaderRoute: typeof AuthenticatedBloodDonorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/bills': {
       id: '/_authenticated/bills'
       path: '/bills'
@@ -608,6 +647,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppointmentsRoute: typeof AuthenticatedAppointmentsRoute
   AuthenticatedBillsRoute: typeof AuthenticatedBillsRoute
+  AuthenticatedBloodDonorRoute: typeof AuthenticatedBloodDonorRoute
   AuthenticatedBookRoute: typeof AuthenticatedBookRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
@@ -619,6 +659,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppointmentsRoute: AuthenticatedAppointmentsRoute,
   AuthenticatedBillsRoute: AuthenticatedBillsRoute,
+  AuthenticatedBloodDonorRoute: AuthenticatedBloodDonorRoute,
   AuthenticatedBookRoute: AuthenticatedBookRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
@@ -637,6 +678,7 @@ const rootRouteChildren: RootRouteChildren = {
   AiAssistantRoute: AiAssistantRoute,
   AuthRoute: AuthRoute,
   BlogRoute: BlogRoute,
+  BloodBankRoute: BloodBankRoute,
   CareersRoute: CareersRoute,
   ContactRoute: ContactRoute,
   DepartmentsRoute: DepartmentsRoute,
@@ -656,13 +698,3 @@ const rootRouteChildren: RootRouteChildren = {
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
   ._addFileTypes<FileRouteTypes>()
-
-import type { getRouter } from './router.tsx'
-import type { startInstance } from './start.ts'
-declare module '@tanstack/react-start' {
-  interface Register {
-    ssr: true
-    router: Awaited<ReturnType<typeof getRouter>>
-    config: Awaited<ReturnType<typeof startInstance.getOptions>>
-  }
-}
