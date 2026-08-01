@@ -37,6 +37,7 @@ import { Route as AuthenticatedPrescriptionsRouteImport } from './routes/_authen
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated/book'
+import { Route as AuthenticatedBloodDonorRouteImport } from './routes/_authenticated/blood-donor'
 import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
 import { Route as AuthenticatedAppointmentsRouteImport } from './routes/_authenticated/appointments'
 
@@ -181,6 +182,11 @@ const AuthenticatedBookRoute = AuthenticatedBookRouteImport.update({
   path: '/book',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedBloodDonorRoute = AuthenticatedBloodDonorRouteImport.update({
+  id: '/blood-donor',
+  path: '/blood-donor',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedBillsRoute = AuthenticatedBillsRouteImport.update({
   id: '/bills',
   path: '/bills',
@@ -217,6 +223,7 @@ export interface FileRoutesByFullPath {
   '/testimonials': typeof TestimonialsRoute
   '/appointments': typeof AuthenticatedAppointmentsRoute
   '/bills': typeof AuthenticatedBillsRoute
+  '/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -248,6 +255,7 @@ export interface FileRoutesByTo {
   '/testimonials': typeof TestimonialsRoute
   '/appointments': typeof AuthenticatedAppointmentsRoute
   '/bills': typeof AuthenticatedBillsRoute
+  '/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
@@ -281,6 +289,7 @@ export interface FileRoutesById {
   '/testimonials': typeof TestimonialsRoute
   '/_authenticated/appointments': typeof AuthenticatedAppointmentsRoute
   '/_authenticated/bills': typeof AuthenticatedBillsRoute
+  '/_authenticated/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/_authenticated/book': typeof AuthenticatedBookRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
@@ -314,6 +323,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/appointments'
     | '/bills'
+    | '/blood-donor'
     | '/book'
     | '/dashboard'
     | '/notifications'
@@ -345,6 +355,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/appointments'
     | '/bills'
+    | '/blood-donor'
     | '/book'
     | '/dashboard'
     | '/notifications'
@@ -377,6 +388,7 @@ export interface FileRouteTypes {
     | '/testimonials'
     | '/_authenticated/appointments'
     | '/_authenticated/bills'
+    | '/_authenticated/blood-donor'
     | '/_authenticated/book'
     | '/_authenticated/dashboard'
     | '/_authenticated/notifications'
@@ -608,6 +620,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedBookRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/blood-donor': {
+      id: '/_authenticated/blood-donor'
+      path: '/blood-donor'
+      fullPath: '/blood-donor'
+      preLoaderRoute: typeof AuthenticatedBloodDonorRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/bills': {
       id: '/_authenticated/bills'
       path: '/bills'
@@ -628,6 +647,7 @@ declare module '@tanstack/react-router' {
 interface AuthenticatedRouteRouteChildren {
   AuthenticatedAppointmentsRoute: typeof AuthenticatedAppointmentsRoute
   AuthenticatedBillsRoute: typeof AuthenticatedBillsRoute
+  AuthenticatedBloodDonorRoute: typeof AuthenticatedBloodDonorRoute
   AuthenticatedBookRoute: typeof AuthenticatedBookRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
@@ -639,6 +659,7 @@ interface AuthenticatedRouteRouteChildren {
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedAppointmentsRoute: AuthenticatedAppointmentsRoute,
   AuthenticatedBillsRoute: AuthenticatedBillsRoute,
+  AuthenticatedBloodDonorRoute: AuthenticatedBloodDonorRoute,
   AuthenticatedBookRoute: AuthenticatedBookRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,

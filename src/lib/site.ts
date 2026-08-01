@@ -16,5 +16,6 @@ export const NAV_LINKS = [
   { to: "/doctors", label: "Doctors" },
   { to: "/services", label: "Services" },
   { to: "/blog", label: "Blog" },
+  { to: "/blood-bank", label: "Blood Bank" },
   { to: "/contact", label: "Contact" },
 ] as const;
