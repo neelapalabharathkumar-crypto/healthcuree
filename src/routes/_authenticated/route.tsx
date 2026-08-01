@@ -4,7 +4,7 @@ import { Logo } from "@/components/site/Logo";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard, Calendar, FileText, Pill, Bot, CreditCard,
-  Bell, User as UserIcon, LogOut, Menu, X,
+  Bell, User as UserIcon, LogOut, Menu, X, Droplet,
 } from "lucide-react";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
