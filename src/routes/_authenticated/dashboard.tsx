@@ -26,6 +26,14 @@ function Dashboard() {
     queryKey: ["my-notifs"],
     queryFn: async () => (await supabase.from("notifications").select("*").eq("read", false)).data ?? [],
   });
+  const { data: donor, isLoading: donorLoading } = useQuery({
+    queryKey: ["my-donor"],
+    queryFn: async () => {
+      const u = (await supabase.auth.getUser()).data.user;
+      if (!u) return null;
+      return (await supabase.from("blood_donors").select("*").eq("user_id", u.id).maybeSingle()).data;
+    },
+  });
 
   const name = (user?.user_metadata?.full_name as string) || user?.email?.split("@")[0] || "there";
 
