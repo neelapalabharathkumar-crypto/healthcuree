@@ -110,6 +110,54 @@ export type Database = {
         }
         Relationships: []
       }
+      blood_donors: {
+        Row: {
+          age: number | null
+          blood_group: string
+          city: string
+          created_at: string
+          email: string | null
+          full_name: string
+          id: string
+          is_available: boolean
+          last_donation_date: string | null
+          phone: string
+          state: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          age?: number | null
+          blood_group: string
+          city: string
+          created_at?: string
+          email?: string | null
+          full_name: string
+          id?: string
+          is_available?: boolean
+          last_donation_date?: string | null
+          phone: string
+          state: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          age?: number | null
+          blood_group?: string
+          city?: string
+          created_at?: string
+          email?: string | null
+          full_name?: string
+          id?: string
+          is_available?: boolean
+          last_donation_date?: string | null
+          phone?: string
+          state?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       contact_messages: {
         Row: {
           created_at: string
