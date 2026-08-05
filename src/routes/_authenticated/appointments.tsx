@@ -13,6 +13,10 @@ function Page() {
     queryKey: ["appointments-all"],
     queryFn: async () => (await supabase.from("appointments").select("*, doctors(full_name, specialization), departments(name)").order("appointment_date", { ascending: false })).data ?? [],
   });
+  const { data: codes = [] } = useQuery({
+    queryKey: ["my-codes"],
+    queryFn: async () => (await supabase.from("verification_codes").select("*")).data ?? [],
+  });
   const cancel = useMutation({
     mutationFn: async (id: string) => {
       const { error } = await supabase.from("appointments").update({ status: "cancelled" }).eq("id", id);
@@ -38,6 +42,18 @@ function Page() {
                 <div className="text-xs text-muted-foreground">{a.doctors?.specialization} · {a.departments?.name}</div>
                 <div className="text-sm mt-1">{a.appointment_date} · {a.appointment_time}</div>
                 {a.reason && <div className="text-xs text-muted-foreground mt-1">"{a.reason}"</div>}
+                {(() => {
+                  const vc = codes.find((c: any) => c.appointment_id === a.id);
+                  if (!vc) return null;
+                  return (
+                    <div className="mt-2 text-xs">
+                      <span className="rounded-md bg-primary/10 text-primary px-2 py-1 font-semibold tracking-widest">Code {vc.code}</span>
+                      <span className="ml-2 text-muted-foreground">
+                        payment {vc.payment_status} · reception {vc.reception_status} · report {vc.report_status}
+                      </span>
+                    </div>
+                  );
+                })()}
               </div>
               <div className="flex items-center gap-3">
                 <span className={`text-xs px-2 py-1 rounded-full font-medium capitalize ${
