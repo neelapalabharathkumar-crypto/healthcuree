@@ -20,7 +20,7 @@ export const Route = createFileRoute("/_authenticated/book")({
 function Book() {
   const search = Route.useSearch();
   const [departmentId, setDepartmentId] = useState<string>("");
-  const [doctorId, setDoctorId] = useState<string>(search.doctor);
+  const [doctorId, setDoctorId] = useState<string>(search.doctor ?? "");
   const [date, setDate] = useState<string>("");
   const [time, setTime] = useState<string>("10:00");
   const [reason, setReason] = useState<string>("");
