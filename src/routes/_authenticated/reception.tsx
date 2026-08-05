@@ -83,7 +83,7 @@ function Page() {
       ).data ?? [],
   });
 
-  async function setStatus(id: string, status: string) {
+  async function setStatus(id: string, status: "pending" | "confirmed" | "completed" | "cancelled") {
     const { error } = await supabase.from("appointments").update({ status }).eq("id", id);
     if (error) return toast.error(error.message);
     toast.success(`Appointment ${status}`);

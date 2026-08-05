@@ -32,9 +32,11 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRecordsRouteImport } from './routes/_authenticated/records'
+import { Route as AuthenticatedReceptionRouteImport } from './routes/_authenticated/reception'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedPrescriptionsRouteImport } from './routes/_authenticated/prescriptions'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedDoctorPanelRouteImport } from './routes/_authenticated/doctor-panel'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated/book'
 import { Route as AuthenticatedBloodDonorRouteImport } from './routes/_authenticated/blood-donor'
@@ -156,6 +158,11 @@ const AuthenticatedRecordsRoute = AuthenticatedRecordsRouteImport.update({
   path: '/records',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReceptionRoute = AuthenticatedReceptionRouteImport.update({
+  id: '/reception',
+  path: '/reception',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -171,6 +178,12 @@ const AuthenticatedNotificationsRoute =
   AuthenticatedNotificationsRouteImport.update({
     id: '/notifications',
     path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDoctorPanelRoute =
+  AuthenticatedDoctorPanelRouteImport.update({
+    id: '/doctor-panel',
+    path: '/doctor-panel',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -232,9 +245,11 @@ export interface FileRoutesByFullPath {
   '/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/doctor-panel': typeof AuthenticatedDoctorPanelRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/reception': typeof AuthenticatedReceptionRoute
   '/records': typeof AuthenticatedRecordsRoute
   '/api/public/bootstrap-staff': typeof ApiPublicBootstrapStaffRoute
 }
@@ -265,9 +280,11 @@ export interface FileRoutesByTo {
   '/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/doctor-panel': typeof AuthenticatedDoctorPanelRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/reception': typeof AuthenticatedReceptionRoute
   '/records': typeof AuthenticatedRecordsRoute
   '/api/public/bootstrap-staff': typeof ApiPublicBootstrapStaffRoute
 }
@@ -300,9 +317,11 @@ export interface FileRoutesById {
   '/_authenticated/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/_authenticated/book': typeof AuthenticatedBookRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/doctor-panel': typeof AuthenticatedDoctorPanelRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/reception': typeof AuthenticatedReceptionRoute
   '/_authenticated/records': typeof AuthenticatedRecordsRoute
   '/api/public/bootstrap-staff': typeof ApiPublicBootstrapStaffRoute
 }
@@ -335,9 +354,11 @@ export interface FileRouteTypes {
     | '/blood-donor'
     | '/book'
     | '/dashboard'
+    | '/doctor-panel'
     | '/notifications'
     | '/prescriptions'
     | '/profile'
+    | '/reception'
     | '/records'
     | '/api/public/bootstrap-staff'
   fileRoutesByTo: FileRoutesByTo
@@ -368,9 +389,11 @@ export interface FileRouteTypes {
     | '/blood-donor'
     | '/book'
     | '/dashboard'
+    | '/doctor-panel'
     | '/notifications'
     | '/prescriptions'
     | '/profile'
+    | '/reception'
     | '/records'
     | '/api/public/bootstrap-staff'
   id:
@@ -402,9 +425,11 @@ export interface FileRouteTypes {
     | '/_authenticated/blood-donor'
     | '/_authenticated/book'
     | '/_authenticated/dashboard'
+    | '/_authenticated/doctor-panel'
     | '/_authenticated/notifications'
     | '/_authenticated/prescriptions'
     | '/_authenticated/profile'
+    | '/_authenticated/reception'
     | '/_authenticated/records'
     | '/api/public/bootstrap-staff'
   fileRoutesById: FileRoutesById
@@ -598,6 +623,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRecordsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reception': {
+      id: '/_authenticated/reception'
+      path: '/reception'
+      fullPath: '/reception'
+      preLoaderRoute: typeof AuthenticatedReceptionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
@@ -617,6 +649,13 @@ declare module '@tanstack/react-router' {
       path: '/notifications'
       fullPath: '/notifications'
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/doctor-panel': {
+      id: '/_authenticated/doctor-panel'
+      path: '/doctor-panel'
+      fullPath: '/doctor-panel'
+      preLoaderRoute: typeof AuthenticatedDoctorPanelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
@@ -670,9 +709,11 @@ interface AuthenticatedRouteRouteChildren {
   AuthenticatedBloodDonorRoute: typeof AuthenticatedBloodDonorRoute
   AuthenticatedBookRoute: typeof AuthenticatedBookRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDoctorPanelRoute: typeof AuthenticatedDoctorPanelRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedPrescriptionsRoute: typeof AuthenticatedPrescriptionsRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedReceptionRoute: typeof AuthenticatedReceptionRoute
   AuthenticatedRecordsRoute: typeof AuthenticatedRecordsRoute
 }
 
@@ -682,9 +723,11 @@ const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
   AuthenticatedBloodDonorRoute: AuthenticatedBloodDonorRoute,
   AuthenticatedBookRoute: AuthenticatedBookRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDoctorPanelRoute: AuthenticatedDoctorPanelRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedPrescriptionsRoute: AuthenticatedPrescriptionsRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedReceptionRoute: AuthenticatedReceptionRoute,
   AuthenticatedRecordsRoute: AuthenticatedRecordsRoute,
 }
 
