@@ -32,14 +32,17 @@ import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as AuthenticatedRecordsRouteImport } from './routes/_authenticated/records'
+import { Route as AuthenticatedReceptionRouteImport } from './routes/_authenticated/reception'
 import { Route as AuthenticatedProfileRouteImport } from './routes/_authenticated/profile'
 import { Route as AuthenticatedPrescriptionsRouteImport } from './routes/_authenticated/prescriptions'
 import { Route as AuthenticatedNotificationsRouteImport } from './routes/_authenticated/notifications'
+import { Route as AuthenticatedDoctorPanelRouteImport } from './routes/_authenticated/doctor-panel'
 import { Route as AuthenticatedDashboardRouteImport } from './routes/_authenticated/dashboard'
 import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated/book'
 import { Route as AuthenticatedBloodDonorRouteImport } from './routes/_authenticated/blood-donor'
 import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
 import { Route as AuthenticatedAppointmentsRouteImport } from './routes/_authenticated/appointments'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -155,6 +158,11 @@ const AuthenticatedRecordsRoute = AuthenticatedRecordsRouteImport.update({
   path: '/records',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedReceptionRoute = AuthenticatedReceptionRouteImport.update({
+  id: '/reception',
+  path: '/reception',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const AuthenticatedProfileRoute = AuthenticatedProfileRouteImport.update({
   id: '/profile',
   path: '/profile',
@@ -170,6 +178,12 @@ const AuthenticatedNotificationsRoute =
   AuthenticatedNotificationsRouteImport.update({
     id: '/notifications',
     path: '/notifications',
+    getParentRoute: () => AuthenticatedRouteRoute,
+  } as any)
+const AuthenticatedDoctorPanelRoute =
+  AuthenticatedDoctorPanelRouteImport.update({
+    id: '/doctor-panel',
+    path: '/doctor-panel',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
 const AuthenticatedDashboardRoute = AuthenticatedDashboardRouteImport.update({
@@ -198,6 +212,11 @@ const AuthenticatedAppointmentsRoute =
     path: '/appointments',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -221,14 +240,17 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/testimonials': typeof TestimonialsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/appointments': typeof AuthenticatedAppointmentsRoute
   '/bills': typeof AuthenticatedBillsRoute
   '/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/doctor-panel': typeof AuthenticatedDoctorPanelRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/reception': typeof AuthenticatedReceptionRoute
   '/records': typeof AuthenticatedRecordsRoute
 }
 export interface FileRoutesByTo {
@@ -253,14 +275,17 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/testimonials': typeof TestimonialsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/appointments': typeof AuthenticatedAppointmentsRoute
   '/bills': typeof AuthenticatedBillsRoute
   '/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/book': typeof AuthenticatedBookRoute
   '/dashboard': typeof AuthenticatedDashboardRoute
+  '/doctor-panel': typeof AuthenticatedDoctorPanelRoute
   '/notifications': typeof AuthenticatedNotificationsRoute
   '/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/profile': typeof AuthenticatedProfileRoute
+  '/reception': typeof AuthenticatedReceptionRoute
   '/records': typeof AuthenticatedRecordsRoute
 }
 export interface FileRoutesById {
@@ -287,14 +312,17 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/testimonials': typeof TestimonialsRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/appointments': typeof AuthenticatedAppointmentsRoute
   '/_authenticated/bills': typeof AuthenticatedBillsRoute
   '/_authenticated/blood-donor': typeof AuthenticatedBloodDonorRoute
   '/_authenticated/book': typeof AuthenticatedBookRoute
   '/_authenticated/dashboard': typeof AuthenticatedDashboardRoute
+  '/_authenticated/doctor-panel': typeof AuthenticatedDoctorPanelRoute
   '/_authenticated/notifications': typeof AuthenticatedNotificationsRoute
   '/_authenticated/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
+  '/_authenticated/reception': typeof AuthenticatedReceptionRoute
   '/_authenticated/records': typeof AuthenticatedRecordsRoute
 }
 export interface FileRouteTypes {
@@ -321,14 +349,17 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/testimonials'
+    | '/admin'
     | '/appointments'
     | '/bills'
     | '/blood-donor'
     | '/book'
     | '/dashboard'
+    | '/doctor-panel'
     | '/notifications'
     | '/prescriptions'
     | '/profile'
+    | '/reception'
     | '/records'
   fileRoutesByTo: FileRoutesByTo
   to:
@@ -353,14 +384,17 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/testimonials'
+    | '/admin'
     | '/appointments'
     | '/bills'
     | '/blood-donor'
     | '/book'
     | '/dashboard'
+    | '/doctor-panel'
     | '/notifications'
     | '/prescriptions'
     | '/profile'
+    | '/reception'
     | '/records'
   id:
     | '__root__'
@@ -386,14 +420,17 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/testimonials'
+    | '/_authenticated/admin'
     | '/_authenticated/appointments'
     | '/_authenticated/bills'
     | '/_authenticated/blood-donor'
     | '/_authenticated/book'
     | '/_authenticated/dashboard'
+    | '/_authenticated/doctor-panel'
     | '/_authenticated/notifications'
     | '/_authenticated/prescriptions'
     | '/_authenticated/profile'
+    | '/_authenticated/reception'
     | '/_authenticated/records'
   fileRoutesById: FileRoutesById
 }
@@ -585,6 +622,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedRecordsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/reception': {
+      id: '/_authenticated/reception'
+      path: '/reception'
+      fullPath: '/reception'
+      preLoaderRoute: typeof AuthenticatedReceptionRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/_authenticated/profile': {
       id: '/_authenticated/profile'
       path: '/profile'
@@ -604,6 +648,13 @@ declare module '@tanstack/react-router' {
       path: '/notifications'
       fullPath: '/notifications'
       preLoaderRoute: typeof AuthenticatedNotificationsRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/doctor-panel': {
+      id: '/_authenticated/doctor-panel'
+      path: '/doctor-panel'
+      fullPath: '/doctor-panel'
+      preLoaderRoute: typeof AuthenticatedDoctorPanelRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
     '/_authenticated/dashboard': {
@@ -641,30 +692,43 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppointmentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
   }
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAppointmentsRoute: typeof AuthenticatedAppointmentsRoute
   AuthenticatedBillsRoute: typeof AuthenticatedBillsRoute
   AuthenticatedBloodDonorRoute: typeof AuthenticatedBloodDonorRoute
   AuthenticatedBookRoute: typeof AuthenticatedBookRoute
   AuthenticatedDashboardRoute: typeof AuthenticatedDashboardRoute
+  AuthenticatedDoctorPanelRoute: typeof AuthenticatedDoctorPanelRoute
   AuthenticatedNotificationsRoute: typeof AuthenticatedNotificationsRoute
   AuthenticatedPrescriptionsRoute: typeof AuthenticatedPrescriptionsRoute
   AuthenticatedProfileRoute: typeof AuthenticatedProfileRoute
+  AuthenticatedReceptionRoute: typeof AuthenticatedReceptionRoute
   AuthenticatedRecordsRoute: typeof AuthenticatedRecordsRoute
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedAppointmentsRoute: AuthenticatedAppointmentsRoute,
   AuthenticatedBillsRoute: AuthenticatedBillsRoute,
   AuthenticatedBloodDonorRoute: AuthenticatedBloodDonorRoute,
   AuthenticatedBookRoute: AuthenticatedBookRoute,
   AuthenticatedDashboardRoute: AuthenticatedDashboardRoute,
+  AuthenticatedDoctorPanelRoute: AuthenticatedDoctorPanelRoute,
   AuthenticatedNotificationsRoute: AuthenticatedNotificationsRoute,
   AuthenticatedPrescriptionsRoute: AuthenticatedPrescriptionsRoute,
   AuthenticatedProfileRoute: AuthenticatedProfileRoute,
+  AuthenticatedReceptionRoute: AuthenticatedReceptionRoute,
   AuthenticatedRecordsRoute: AuthenticatedRecordsRoute,
 }
 

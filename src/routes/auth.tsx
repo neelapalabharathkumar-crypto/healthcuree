@@ -1,6 +1,7 @@
 import { createFileRoute, useNavigate, useRouterState } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
+import { fetchRoles, homeForRoles } from "@/lib/roles";
 import { lovable } from "@/integrations/lovable/index";
 import { SiteLayout } from "@/components/site/SiteLayout";
 import { Button } from "@/components/ui/button";
@@ -30,8 +31,8 @@ function AuthPage() {
   const pathname = useRouterState({ select: (s) => s.location.pathname });
 
   useEffect(() => {
-    supabase.auth.getUser().then(({ data }) => {
-      if (data.user) navigate({ to: "/dashboard", replace: true });
+    supabase.auth.getUser().then(async ({ data }) => {
+      if (data.user) navigate({ to: homeForRoles(await fetchRoles()), replace: true });
     });
   }, [navigate, pathname]);
 
@@ -61,7 +62,7 @@ function AuthPage() {
       setLoading(false);
       if (error) return toast.error(error.message);
       toast.success("Welcome back!");
-      navigate({ to: "/dashboard" });
+      navigate({ to: homeForRoles(await fetchRoles()) });
     }
   }
 
@@ -69,7 +70,7 @@ function AuthPage() {
     const result = await lovable.auth.signInWithOAuth("google", { redirect_uri: window.location.origin });
     if (result.error) return toast.error(String((result.error as Error).message ?? "Google sign-in failed"));
     if (result.redirected) return;
-    navigate({ to: "/dashboard" });
+    navigate({ to: homeForRoles(await fetchRoles()) });
   }
 
   return (
