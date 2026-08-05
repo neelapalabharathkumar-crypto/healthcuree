@@ -14,10 +14,41 @@ export type Database = {
   }
   public: {
     Tables: {
+      announcements: {
+        Row: {
+          audience: string
+          body: string
+          created_at: string
+          id: string
+          is_active: boolean
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          audience?: string
+          body: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          audience?: string
+          body?: string
+          created_at?: string
+          id?: string
+          is_active?: boolean
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
       appointments: {
         Row: {
           appointment_date: string
           appointment_time: string
+          arrival_confirmed: boolean
           created_at: string
           department_id: string | null
           doctor_id: string
@@ -31,6 +62,7 @@ export type Database = {
         Insert: {
           appointment_date: string
           appointment_time: string
+          arrival_confirmed?: boolean
           created_at?: string
           department_id?: string | null
           doctor_id: string
@@ -44,6 +76,7 @@ export type Database = {
         Update: {
           appointment_date?: string
           appointment_time?: string
+          arrival_confirmed?: boolean
           created_at?: string
           department_id?: string | null
           doctor_id?: string
@@ -299,6 +332,7 @@ export type Database = {
           patient_id: string
           report_type: string | null
           title: string
+          verification_code: string | null
         }
         Insert: {
           created_at?: string
@@ -309,6 +343,7 @@ export type Database = {
           patient_id: string
           report_type?: string | null
           title: string
+          verification_code?: string | null
         }
         Update: {
           created_at?: string
@@ -319,6 +354,7 @@ export type Database = {
           patient_id?: string
           report_type?: string | null
           title?: string
+          verification_code?: string | null
         }
         Relationships: [
           {
@@ -414,6 +450,7 @@ export type Database = {
           instructions: string | null
           medications: Json
           patient_id: string
+          verification_code: string | null
         }
         Insert: {
           appointment_id?: string | null
@@ -424,6 +461,7 @@ export type Database = {
           instructions?: string | null
           medications?: Json
           patient_id: string
+          verification_code?: string | null
         }
         Update: {
           appointment_id?: string | null
@@ -434,6 +472,7 @@ export type Database = {
           instructions?: string | null
           medications?: Json
           patient_id?: string
+          verification_code?: string | null
         }
         Relationships: [
           {
@@ -545,11 +584,82 @@ export type Database = {
         }
         Relationships: []
       }
+      verification_codes: {
+        Row: {
+          appointment_id: string | null
+          code: string
+          created_at: string
+          doctor_id: string | null
+          expires_at: string
+          id: string
+          patient_id: string
+          payment_id: string | null
+          payment_status: string
+          reception_status: string
+          report_status: string
+          updated_at: string
+          used: boolean
+        }
+        Insert: {
+          appointment_id?: string | null
+          code: string
+          created_at?: string
+          doctor_id?: string | null
+          expires_at?: string
+          id?: string
+          patient_id: string
+          payment_id?: string | null
+          payment_status?: string
+          reception_status?: string
+          report_status?: string
+          updated_at?: string
+          used?: boolean
+        }
+        Update: {
+          appointment_id?: string | null
+          code?: string
+          created_at?: string
+          doctor_id?: string | null
+          expires_at?: string
+          id?: string
+          patient_id?: string
+          payment_id?: string | null
+          payment_status?: string
+          reception_status?: string
+          report_status?: string
+          updated_at?: string
+          used?: boolean
+        }
+        Relationships: [
+          {
+            foreignKeyName: "verification_codes_appointment_id_fkey"
+            columns: ["appointment_id"]
+            isOneToOne: false
+            referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "verification_codes_doctor_id_fkey"
+            columns: ["doctor_id"]
+            isOneToOne: false
+            referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "verification_codes_payment_id_fkey"
+            columns: ["payment_id"]
+            isOneToOne: false
+            referencedRelation: "payments"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
     }
     Views: {
       [_ in never]: never
     }
     Functions: {
+      generate_verification_code: { Args: never; Returns: string }
       has_role: {
         Args: {
           _role: Database["public"]["Enums"]["app_role"]
