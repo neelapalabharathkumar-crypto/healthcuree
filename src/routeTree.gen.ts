@@ -40,6 +40,7 @@ import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated/b
 import { Route as AuthenticatedBloodDonorRouteImport } from './routes/_authenticated/blood-donor'
 import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
 import { Route as AuthenticatedAppointmentsRouteImport } from './routes/_authenticated/appointments'
+import { Route as ApiPublicBootstrapStaffRouteImport } from './routes/api/public/bootstrap-staff'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
   id: '/testimonials',
@@ -198,6 +199,11 @@ const AuthenticatedAppointmentsRoute =
     path: '/appointments',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const ApiPublicBootstrapStaffRoute = ApiPublicBootstrapStaffRouteImport.update({
+  id: '/api/public/bootstrap-staff',
+  path: '/api/public/bootstrap-staff',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
@@ -230,6 +236,7 @@ export interface FileRoutesByFullPath {
   '/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/records': typeof AuthenticatedRecordsRoute
+  '/api/public/bootstrap-staff': typeof ApiPublicBootstrapStaffRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -262,6 +269,7 @@ export interface FileRoutesByTo {
   '/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/profile': typeof AuthenticatedProfileRoute
   '/records': typeof AuthenticatedRecordsRoute
+  '/api/public/bootstrap-staff': typeof ApiPublicBootstrapStaffRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -296,6 +304,7 @@ export interface FileRoutesById {
   '/_authenticated/prescriptions': typeof AuthenticatedPrescriptionsRoute
   '/_authenticated/profile': typeof AuthenticatedProfileRoute
   '/_authenticated/records': typeof AuthenticatedRecordsRoute
+  '/api/public/bootstrap-staff': typeof ApiPublicBootstrapStaffRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -330,6 +339,7 @@ export interface FileRouteTypes {
     | '/prescriptions'
     | '/profile'
     | '/records'
+    | '/api/public/bootstrap-staff'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -362,6 +372,7 @@ export interface FileRouteTypes {
     | '/prescriptions'
     | '/profile'
     | '/records'
+    | '/api/public/bootstrap-staff'
   id:
     | '__root__'
     | '/'
@@ -395,6 +406,7 @@ export interface FileRouteTypes {
     | '/_authenticated/prescriptions'
     | '/_authenticated/profile'
     | '/_authenticated/records'
+    | '/api/public/bootstrap-staff'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -420,6 +432,7 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  ApiPublicBootstrapStaffRoute: typeof ApiPublicBootstrapStaffRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -641,6 +654,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppointmentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/api/public/bootstrap-staff': {
+      id: '/api/public/bootstrap-staff'
+      path: '/api/public/bootstrap-staff'
+      fullPath: '/api/public/bootstrap-staff'
+      preLoaderRoute: typeof ApiPublicBootstrapStaffRouteImport
+      parentRoute: typeof rootRouteImport
+    }
   }
 }
 
@@ -694,6 +714,7 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   TestimonialsRoute: TestimonialsRoute,
+  ApiPublicBootstrapStaffRoute: ApiPublicBootstrapStaffRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
