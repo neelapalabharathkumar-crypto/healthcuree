@@ -53,7 +53,7 @@ function Book() {
     setLoading(true);
     const { data: userData } = await supabase.auth.getUser();
     if (!userData.user) { setLoading(false); return toast.error("Please sign in"); }
-    const { error } = await supabase.from("appointments").insert({
+    const { data: appt, error } = await supabase.from("appointments").insert({
       patient_id: userData.user.id,
       doctor_id: doctorId,
       department_id: departmentId || null,
@@ -61,10 +61,36 @@ function Book() {
       appointment_time: time,
       reason,
       status: "pending",
+    }).select("id").single();
+    if (error || !appt) { setLoading(false); return toast.error(error?.message ?? "Could not book"); }
+
+    // Mock online payment — records a paid transaction for this consultation.
+    const amount = Number(selectedDoctor?.consultation_fee ?? 0);
+    const { data: payment } = await supabase.from("payments").insert({
+      patient_id: userData.user.id,
+      appointment_id: appt.id,
+      amount,
+      status: "paid",
+      method: "online",
+      description: `Consultation — ${selectedDoctor?.full_name ?? "Doctor"}`,
+    }).select("id").single();
+
+    // Unique 5-digit verification code issued after successful payment.
+    const { data: code, error: codeErr } = await supabase.rpc("generate_verification_code");
+    if (codeErr || !code) { setLoading(false); return toast.error("Payment saved, but code could not be generated"); }
+    const { error: vcErr } = await supabase.from("verification_codes").insert({
+      code,
+      patient_id: userData.user.id,
+      appointment_id: appt.id,
+      doctor_id: doctorId,
+      payment_id: payment?.id ?? null,
+      payment_status: "paid",
+      reception_status: "pending",
+      report_status: "pending",
     });
     setLoading(false);
-    if (error) return toast.error(error.message);
-    toast.success("Appointment requested! We'll confirm shortly.");
+    if (vcErr) return toast.error(vcErr.message);
+    toast.success(`Payment successful! Your verification code is ${code}`, { duration: 10000 });
     navigate({ to: "/appointments" });
   }
 
