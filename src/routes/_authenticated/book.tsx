@@ -12,7 +12,9 @@ import { CalendarCheck, Stethoscope } from "lucide-react";
 
 export const Route = createFileRoute("/_authenticated/book")({
   component: Book,
-  validateSearch: (s: Record<string, unknown>) => ({ doctor: (s.doctor as string) ?? "" }),
+  validateSearch: (s: Record<string, unknown>): { doctor?: string } => ({
+    doctor: typeof s.doctor === "string" && s.doctor ? s.doctor : undefined,
+  }),
 });
 
 function Book() {
