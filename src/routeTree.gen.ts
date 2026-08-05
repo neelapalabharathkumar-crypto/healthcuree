@@ -42,6 +42,7 @@ import { Route as AuthenticatedBookRouteImport } from './routes/_authenticated/b
 import { Route as AuthenticatedBloodDonorRouteImport } from './routes/_authenticated/blood-donor'
 import { Route as AuthenticatedBillsRouteImport } from './routes/_authenticated/bills'
 import { Route as AuthenticatedAppointmentsRouteImport } from './routes/_authenticated/appointments'
+import { Route as AuthenticatedAdminRouteImport } from './routes/_authenticated/admin'
 import { Route as ApiPublicBootstrapStaffRouteImport } from './routes/api/public/bootstrap-staff'
 
 const TestimonialsRoute = TestimonialsRouteImport.update({
@@ -212,6 +213,11 @@ const AuthenticatedAppointmentsRoute =
     path: '/appointments',
     getParentRoute: () => AuthenticatedRouteRoute,
   } as any)
+const AuthenticatedAdminRoute = AuthenticatedAdminRouteImport.update({
+  id: '/admin',
+  path: '/admin',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
 const ApiPublicBootstrapStaffRoute = ApiPublicBootstrapStaffRouteImport.update({
   id: '/api/public/bootstrap-staff',
   path: '/api/public/bootstrap-staff',
@@ -240,6 +246,7 @@ export interface FileRoutesByFullPath {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/testimonials': typeof TestimonialsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/appointments': typeof AuthenticatedAppointmentsRoute
   '/bills': typeof AuthenticatedBillsRoute
   '/blood-donor': typeof AuthenticatedBloodDonorRoute
@@ -275,6 +282,7 @@ export interface FileRoutesByTo {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/testimonials': typeof TestimonialsRoute
+  '/admin': typeof AuthenticatedAdminRoute
   '/appointments': typeof AuthenticatedAppointmentsRoute
   '/bills': typeof AuthenticatedBillsRoute
   '/blood-donor': typeof AuthenticatedBloodDonorRoute
@@ -312,6 +320,7 @@ export interface FileRoutesById {
   '/sitemap.xml': typeof SitemapDotxmlRoute
   '/terms': typeof TermsRoute
   '/testimonials': typeof TestimonialsRoute
+  '/_authenticated/admin': typeof AuthenticatedAdminRoute
   '/_authenticated/appointments': typeof AuthenticatedAppointmentsRoute
   '/_authenticated/bills': typeof AuthenticatedBillsRoute
   '/_authenticated/blood-donor': typeof AuthenticatedBloodDonorRoute
@@ -349,6 +358,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/testimonials'
+    | '/admin'
     | '/appointments'
     | '/bills'
     | '/blood-donor'
@@ -384,6 +394,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/testimonials'
+    | '/admin'
     | '/appointments'
     | '/bills'
     | '/blood-donor'
@@ -420,6 +431,7 @@ export interface FileRouteTypes {
     | '/sitemap.xml'
     | '/terms'
     | '/testimonials'
+    | '/_authenticated/admin'
     | '/_authenticated/appointments'
     | '/_authenticated/bills'
     | '/_authenticated/blood-donor'
@@ -693,6 +705,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedAppointmentsRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/admin': {
+      id: '/_authenticated/admin'
+      path: '/admin'
+      fullPath: '/admin'
+      preLoaderRoute: typeof AuthenticatedAdminRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
     '/api/public/bootstrap-staff': {
       id: '/api/public/bootstrap-staff'
       path: '/api/public/bootstrap-staff'
@@ -704,6 +723,7 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedRouteRouteChildren {
+  AuthenticatedAdminRoute: typeof AuthenticatedAdminRoute
   AuthenticatedAppointmentsRoute: typeof AuthenticatedAppointmentsRoute
   AuthenticatedBillsRoute: typeof AuthenticatedBillsRoute
   AuthenticatedBloodDonorRoute: typeof AuthenticatedBloodDonorRoute
@@ -718,6 +738,7 @@ interface AuthenticatedRouteRouteChildren {
 }
 
 const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedAdminRoute: AuthenticatedAdminRoute,
   AuthenticatedAppointmentsRoute: AuthenticatedAppointmentsRoute,
   AuthenticatedBillsRoute: AuthenticatedBillsRoute,
   AuthenticatedBloodDonorRoute: AuthenticatedBloodDonorRoute,

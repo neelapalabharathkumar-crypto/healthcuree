@@ -4,12 +4,13 @@ import { Logo } from "@/components/site/Logo";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard, Calendar, FileText, Pill, Bot, CreditCard,
-  Bell, User as UserIcon, LogOut, Menu, X, Droplet,
+  Bell, User as UserIcon, LogOut, Menu, X, Droplet, ShieldCheck, ClipboardList, Stethoscope,
 } from "lucide-react";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
 import { FloatingActions } from "@/components/site/FloatingActions";
+import { useRoles } from "@/lib/roles";
 
 export const Route = createFileRoute("/_authenticated")({
   ssr: false,
@@ -33,8 +34,15 @@ const nav = [
   { to: "/profile", label: "Profile", icon: UserIcon },
 ] as const;
 
+const staffNav = [
+  { to: "/admin", label: "Admin Panel", icon: ShieldCheck, role: "admin" },
+  { to: "/reception", label: "Reception", icon: ClipboardList, role: "receptionist" },
+  { to: "/doctor-panel", label: "Doctor Panel", icon: Stethoscope, role: "doctor" },
+] as const;
+
 function AuthedLayout() {
   const [open, setOpen] = useState(false);
+  const { has } = useRoles();
   const pathname = useRouterState({ select: (s) => s.location.pathname });
   const router = useRouter();
   const qc = useQueryClient();
@@ -66,6 +74,19 @@ function AuthedLayout() {
               </Link>
             );
           })}
+          {staffNav
+            .filter((n) => has(n.role) || (n.role !== "admin" && has("admin")))
+            .map((n) => {
+              const active = pathname === n.to;
+              return (
+                <Link key={n.to} to={n.to} onClick={() => setOpen(false)}
+                  className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
+                    active ? "bg-gradient-primary text-primary-foreground shadow-soft" : "text-foreground/70 hover:bg-primary/5 hover:text-primary"
+                  }`}>
+                  <n.icon className="h-4 w-4" /> {n.label}
+                </Link>
+              );
+            })}
         </nav>
         <div className="absolute bottom-4 left-3 right-3">
           <Button variant="outline" className="w-full" onClick={signOut}>
