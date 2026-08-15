@@ -130,6 +130,13 @@ function BloodBankPage() {
               </Button>
             </CardContent>
           </Card>
+        ) : !filtersReady ? (
+          <Card>
+            <CardContent className="p-10 text-center text-muted-foreground">
+              <Search className="mx-auto h-10 w-10 opacity-50" />
+              <p className="mt-3 text-sm">Pick a state or blood group (or type a city) to find available donors.</p>
+            </CardContent>
+          </Card>
         ) : isLoading ? (
           <p className="text-sm text-muted-foreground">Loading donors…</p>
         ) : results.length === 0 ? (
