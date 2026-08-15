@@ -75,22 +75,17 @@ function Book() {
       description: `Consultation — ${selectedDoctor?.full_name ?? "Doctor"}`,
     }).select("id").single();
 
-    // Unique 5-digit verification code issued after successful payment.
-    const { data: code, error: codeErr } = await supabase.rpc("generate_verification_code");
-    if (codeErr || !code) { setLoading(false); return toast.error("Payment saved, but code could not be generated"); }
-    const { error: vcErr } = await supabase.from("verification_codes").insert({
-      code,
-      patient_id: userData.user.id,
-      appointment_id: appt.id,
-      doctor_id: doctorId,
-      payment_id: payment?.id ?? null,
-      payment_status: "paid",
-      reception_status: "pending",
-      report_status: "pending",
-    });
-    setLoading(false);
-    if (vcErr) return toast.error(vcErr.message);
-    toast.success(`Payment successful! Your verification code is ${code}`, { duration: 10000 });
+    // Unique 5-digit verification code issued server-side after successful payment.
+    try {
+      const { code } = await issueVerificationCode({
+        data: { appointmentId: appt.id, doctorId, paymentId: payment?.id ?? null },
+      });
+      setLoading(false);
+      toast.success(`Payment successful! Your verification code is ${code}`, { duration: 10000 });
+    } catch (err) {
+      setLoading(false);
+      return toast.error((err as Error).message);
+    }
     navigate({ to: "/appointments" });
   }
 
