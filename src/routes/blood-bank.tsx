@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -13,6 +14,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { BLOOD_GROUPS, INDIAN_STATES } from "@/lib/blood";
+import { searchBloodDonors, type DonorMatch } from "@/lib/blood.functions";
 import { Droplet, Phone, MapPin, Search, HeartHandshake, LogIn } from "lucide-react";
 
 export const Route = createFileRoute("/blood-bank")({
@@ -47,29 +49,22 @@ function BloodBankPage() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  const { data: donors = [], isLoading } = useQuery({
-    queryKey: ["blood-donors", Boolean(user)],
-    enabled: Boolean(user),
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("blood_donors")
-        .select("id, full_name, phone, blood_group, city, state, last_donation_date")
-        .eq("is_available", true)
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return data ?? [];
-    },
-  });
+  const search = useServerFn(searchBloodDonors);
 
-  const results = useMemo(() => {
-    const q = city.trim().toLowerCase();
-    return donors.filter(
-      (d) =>
-        (state === ANY || d.state === state) &&
-        (group === ANY || d.blood_group === group) &&
-        (q === "" || d.city.toLowerCase().includes(q)),
-    );
-  }, [donors, state, city, group]);
+  const filtersReady = state !== ANY || group !== ANY || city.trim().length >= 2;
+
+  const { data: results = [], isLoading } = useQuery({
+    queryKey: ["blood-donors", Boolean(user), state, group, city.trim().toLowerCase()],
+    enabled: Boolean(user) && filtersReady,
+    queryFn: () =>
+      search({
+        data: {
+          state: state === ANY ? null : state,
+          bloodGroup: group === ANY ? null : group,
+          city: city.trim(),
+        },
+      }),
+  });
 
   return (
     <SiteLayout>
@@ -135,6 +130,13 @@ function BloodBankPage() {
               </Button>
             </CardContent>
           </Card>
+        ) : !filtersReady ? (
+          <Card>
+            <CardContent className="p-10 text-center text-muted-foreground">
+              <Search className="mx-auto h-10 w-10 opacity-50" />
+              <p className="mt-3 text-sm">Pick a state or blood group (or type a city) to find available donors.</p>
+            </CardContent>
+          </Card>
         ) : isLoading ? (
           <p className="text-sm text-muted-foreground">Loading donors…</p>
         ) : results.length === 0 ? (
@@ -148,7 +150,7 @@ function BloodBankPage() {
           <>
             <p className="text-sm text-muted-foreground">{results.length} available donor{results.length === 1 ? "" : "s"} found</p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {results.map((d) => (
+              {results.map((d: DonorMatch) => (
                 <Card key={d.id} className="hover:shadow-elevated transition-shadow">
                   <CardContent className="p-5">
                     <div className="flex items-start justify-between gap-3">
