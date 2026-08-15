@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
+import { useServerFn } from "@tanstack/react-start";
 import { supabase } from "@/integrations/supabase/client";
 import type { User } from "@supabase/supabase-js";
 import { SiteLayout } from "@/components/site/SiteLayout";
@@ -13,6 +14,7 @@ import {
   Select, SelectContent, SelectItem, SelectTrigger, SelectValue,
 } from "@/components/ui/select";
 import { BLOOD_GROUPS, INDIAN_STATES } from "@/lib/blood";
+import { searchBloodDonors, type DonorMatch } from "@/lib/blood.functions";
 import { Droplet, Phone, MapPin, Search, HeartHandshake, LogIn } from "lucide-react";
 
 export const Route = createFileRoute("/blood-bank")({
@@ -141,7 +143,7 @@ function BloodBankPage() {
           <>
             <p className="text-sm text-muted-foreground">{results.length} available donor{results.length === 1 ? "" : "s"} found</p>
             <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-              {results.map((d) => (
+              {results.map((d: DonorMatch) => (
                 <Card key={d.id} className="hover:shadow-elevated transition-shadow">
                   <CardContent className="p-5">
                     <div className="flex items-start justify-between gap-3">
