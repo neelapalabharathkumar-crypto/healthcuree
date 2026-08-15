@@ -47,29 +47,22 @@ function BloodBankPage() {
     return () => sub.subscription.unsubscribe();
   }, []);
 
-  const { data: donors = [], isLoading } = useQuery({
-    queryKey: ["blood-donors", Boolean(user)],
-    enabled: Boolean(user),
-    queryFn: async () => {
-      const { data, error } = await supabase
-        .from("blood_donors")
-        .select("id, full_name, phone, blood_group, city, state, last_donation_date")
-        .eq("is_available", true)
-        .order("created_at", { ascending: false });
-      if (error) throw error;
-      return data ?? [];
-    },
-  });
+  const search = useServerFn(searchBloodDonors);
 
-  const results = useMemo(() => {
-    const q = city.trim().toLowerCase();
-    return donors.filter(
-      (d) =>
-        (state === ANY || d.state === state) &&
-        (group === ANY || d.blood_group === group) &&
-        (q === "" || d.city.toLowerCase().includes(q)),
-    );
-  }, [donors, state, city, group]);
+  const filtersReady = state !== ANY || group !== ANY || city.trim().length >= 2;
+
+  const { data: results = [], isLoading } = useQuery({
+    queryKey: ["blood-donors", Boolean(user), state, group, city.trim().toLowerCase()],
+    enabled: Boolean(user) && filtersReady,
+    queryFn: () =>
+      search({
+        data: {
+          state: state === ANY ? null : state,
+          bloodGroup: group === ANY ? null : group,
+          city: city.trim(),
+        },
+      }),
+  });
 
   return (
     <SiteLayout>
