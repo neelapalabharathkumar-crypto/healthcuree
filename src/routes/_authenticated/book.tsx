@@ -9,6 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
 import { CalendarCheck, Stethoscope } from "lucide-react";
+import { issueVerificationCode } from "@/lib/verification.functions";
 
 export const Route = createFileRoute("/_authenticated/book")({
   component: Book,
