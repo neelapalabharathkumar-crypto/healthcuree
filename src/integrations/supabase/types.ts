@@ -662,7 +662,13 @@ export type Database = {
       generate_verification_code: { Args: never; Returns: string }
     }
     Enums: {
-      app_role: "patient" | "doctor" | "receptionist" | "admin"
+      app_role:
+        | "patient"
+        | "doctor"
+        | "receptionist"
+        | "admin"
+        | "super_admin"
+        | "hospital_admin"
       appointment_status: "pending" | "confirmed" | "completed" | "cancelled"
     }
     CompositeTypes: {
@@ -791,7 +797,14 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["patient", "doctor", "receptionist", "admin"],
+      app_role: [
+        "patient",
+        "doctor",
+        "receptionist",
+        "admin",
+        "super_admin",
+        "hospital_admin",
+      ],
       appointment_status: ["pending", "confirmed", "completed", "cancelled"],
     },
   },
