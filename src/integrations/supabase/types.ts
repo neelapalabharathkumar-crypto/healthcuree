@@ -49,9 +49,11 @@ export type Database = {
           appointment_date: string
           appointment_time: string
           arrival_confirmed: boolean
+          consultation_fee: number | null
           created_at: string
           department_id: string | null
           doctor_id: string
+          hospital_id: string | null
           id: string
           notes: string | null
           patient_id: string
@@ -63,9 +65,11 @@ export type Database = {
           appointment_date: string
           appointment_time: string
           arrival_confirmed?: boolean
+          consultation_fee?: number | null
           created_at?: string
           department_id?: string | null
           doctor_id: string
+          hospital_id?: string | null
           id?: string
           notes?: string | null
           patient_id: string
@@ -77,9 +81,11 @@ export type Database = {
           appointment_date?: string
           appointment_time?: string
           arrival_confirmed?: boolean
+          consultation_fee?: number | null
           created_at?: string
           department_id?: string | null
           doctor_id?: string
+          hospital_id?: string | null
           id?: string
           notes?: string | null
           patient_id?: string
@@ -100,6 +106,13 @@ export type Database = {
             columns: ["doctor_id"]
             isOneToOne: false
             referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "appointments_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
             referencedColumns: ["id"]
           },
         ]
@@ -142,6 +155,47 @@ export type Database = {
           updated_at?: string
         }
         Relationships: []
+      }
+      blood_bank_stock: {
+        Row: {
+          blood_group: string
+          contact: string | null
+          created_at: string
+          hospital_id: string
+          id: string
+          request_status: string
+          units: number
+          updated_at: string
+        }
+        Insert: {
+          blood_group: string
+          contact?: string | null
+          created_at?: string
+          hospital_id: string
+          id?: string
+          request_status?: string
+          units?: number
+          updated_at?: string
+        }
+        Update: {
+          blood_group?: string
+          contact?: string | null
+          created_at?: string
+          hospital_id?: string
+          id?: string
+          request_status?: string
+          units?: number
+          updated_at?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "blood_bank_stock_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       blood_donors: {
         Row: {
@@ -223,8 +277,14 @@ export type Database = {
       }
       departments: {
         Row: {
+          available_days: string[] | null
+          available_time_end: string | null
+          available_time_start: string | null
+          consultation_fee: number | null
           created_at: string
           description: string | null
+          emergency_available: boolean
+          hospital_id: string
           icon: string | null
           id: string
           image_url: string | null
@@ -234,8 +294,14 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          available_days?: string[] | null
+          available_time_end?: string | null
+          available_time_start?: string | null
+          consultation_fee?: number | null
           created_at?: string
           description?: string | null
+          emergency_available?: boolean
+          hospital_id: string
           icon?: string | null
           id?: string
           image_url?: string | null
@@ -245,8 +311,14 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          available_days?: string[] | null
+          available_time_end?: string | null
+          available_time_start?: string | null
+          consultation_fee?: number | null
           created_at?: string
           description?: string | null
+          emergency_available?: boolean
+          hospital_id?: string
           icon?: string | null
           id?: string
           image_url?: string | null
@@ -255,7 +327,15 @@ export type Database = {
           slug?: string
           updated_at?: string
         }
-        Relationships: []
+        Relationships: [
+          {
+            foreignKeyName: "departments_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
       }
       doctors: {
         Row: {
@@ -266,12 +346,19 @@ export type Database = {
           consultation_fee: number | null
           created_at: string
           department_id: string | null
+          doctor_code: string | null
+          email: string | null
           experience_years: number | null
           full_name: string
+          gender: string | null
+          hospital_id: string
           id: string
           image_url: string | null
           is_active: boolean
+          languages: string[] | null
+          phone: string | null
           qualifications: string | null
+          registration_number: string | null
           specialization: string
           updated_at: string
           user_id: string | null
@@ -284,12 +371,19 @@ export type Database = {
           consultation_fee?: number | null
           created_at?: string
           department_id?: string | null
+          doctor_code?: string | null
+          email?: string | null
           experience_years?: number | null
           full_name: string
+          gender?: string | null
+          hospital_id: string
           id?: string
           image_url?: string | null
           is_active?: boolean
+          languages?: string[] | null
+          phone?: string | null
           qualifications?: string | null
+          registration_number?: string | null
           specialization: string
           updated_at?: string
           user_id?: string | null
@@ -302,12 +396,19 @@ export type Database = {
           consultation_fee?: number | null
           created_at?: string
           department_id?: string | null
+          doctor_code?: string | null
+          email?: string | null
           experience_years?: number | null
           full_name?: string
+          gender?: string | null
+          hospital_id?: string
           id?: string
           image_url?: string | null
           is_active?: boolean
+          languages?: string[] | null
+          phone?: string | null
           qualifications?: string | null
+          registration_number?: string | null
           specialization?: string
           updated_at?: string
           user_id?: string | null
@@ -320,13 +421,161 @@ export type Database = {
             referencedRelation: "departments"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "doctors_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
         ]
+      }
+      hospital_staff: {
+        Row: {
+          created_at: string
+          email: string | null
+          employee_id: string | null
+          full_name: string | null
+          hospital_id: string
+          id: string
+          phone: string | null
+          staff_code: string | null
+          staff_type: string
+          status: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          created_at?: string
+          email?: string | null
+          employee_id?: string | null
+          full_name?: string | null
+          hospital_id: string
+          id?: string
+          phone?: string | null
+          staff_code?: string | null
+          staff_type: string
+          status?: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string | null
+          employee_id?: string | null
+          full_name?: string | null
+          hospital_id?: string
+          id?: string
+          phone?: string | null
+          staff_code?: string | null
+          staff_type?: string
+          status?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "hospital_staff_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      hospitals: {
+        Row: {
+          address: string | null
+          ambulance_available: boolean
+          area: string | null
+          beds: number | null
+          city: string
+          code: string
+          country: string
+          created_at: string
+          description: string | null
+          email: string | null
+          emergency_available: boolean
+          emergency_contact: string | null
+          id: string
+          latitude: number | null
+          logo_url: string | null
+          longitude: number | null
+          name: string
+          phone: string | null
+          pin_code: string | null
+          slug: string
+          state: string
+          status: string
+          type: string
+          updated_at: string
+          website: string | null
+          working_hours: string | null
+        }
+        Insert: {
+          address?: string | null
+          ambulance_available?: boolean
+          area?: string | null
+          beds?: number | null
+          city?: string
+          code?: string
+          country?: string
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          emergency_available?: boolean
+          emergency_contact?: string | null
+          id?: string
+          latitude?: number | null
+          logo_url?: string | null
+          longitude?: number | null
+          name: string
+          phone?: string | null
+          pin_code?: string | null
+          slug: string
+          state?: string
+          status?: string
+          type?: string
+          updated_at?: string
+          website?: string | null
+          working_hours?: string | null
+        }
+        Update: {
+          address?: string | null
+          ambulance_available?: boolean
+          area?: string | null
+          beds?: number | null
+          city?: string
+          code?: string
+          country?: string
+          created_at?: string
+          description?: string | null
+          email?: string | null
+          emergency_available?: boolean
+          emergency_contact?: string | null
+          id?: string
+          latitude?: number | null
+          logo_url?: string | null
+          longitude?: number | null
+          name?: string
+          phone?: string | null
+          pin_code?: string | null
+          slug?: string
+          state?: string
+          status?: string
+          type?: string
+          updated_at?: string
+          website?: string | null
+          working_hours?: string | null
+        }
+        Relationships: []
       }
       medical_reports: {
         Row: {
           created_at: string
           doctor_id: string | null
           file_url: string | null
+          hospital_id: string | null
           id: string
           notes: string | null
           patient_id: string
@@ -338,6 +587,7 @@ export type Database = {
           created_at?: string
           doctor_id?: string | null
           file_url?: string | null
+          hospital_id?: string | null
           id?: string
           notes?: string | null
           patient_id: string
@@ -349,6 +599,7 @@ export type Database = {
           created_at?: string
           doctor_id?: string | null
           file_url?: string | null
+          hospital_id?: string | null
           id?: string
           notes?: string | null
           patient_id?: string
@@ -362,6 +613,13 @@ export type Database = {
             columns: ["doctor_id"]
             isOneToOne: false
             referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "medical_reports_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
             referencedColumns: ["id"]
           },
         ]
@@ -403,10 +661,13 @@ export type Database = {
           created_at: string
           currency: string
           description: string | null
+          hospital_id: string | null
           id: string
           method: string | null
           patient_id: string
           status: string
+          transaction_reference: string | null
+          verification_code: string | null
         }
         Insert: {
           amount: number
@@ -414,10 +675,13 @@ export type Database = {
           created_at?: string
           currency?: string
           description?: string | null
+          hospital_id?: string | null
           id?: string
           method?: string | null
           patient_id: string
           status?: string
+          transaction_reference?: string | null
+          verification_code?: string | null
         }
         Update: {
           amount?: number
@@ -425,10 +689,13 @@ export type Database = {
           created_at?: string
           currency?: string
           description?: string | null
+          hospital_id?: string | null
           id?: string
           method?: string | null
           patient_id?: string
           status?: string
+          transaction_reference?: string | null
+          verification_code?: string | null
         }
         Relationships: [
           {
@@ -436,6 +703,13 @@ export type Database = {
             columns: ["appointment_id"]
             isOneToOne: false
             referencedRelation: "appointments"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "payments_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
             referencedColumns: ["id"]
           },
         ]
@@ -446,6 +720,8 @@ export type Database = {
           created_at: string
           diagnosis: string | null
           doctor_id: string
+          follow_up_date: string | null
+          hospital_id: string | null
           id: string
           instructions: string | null
           medications: Json
@@ -457,6 +733,8 @@ export type Database = {
           created_at?: string
           diagnosis?: string | null
           doctor_id: string
+          follow_up_date?: string | null
+          hospital_id?: string | null
           id?: string
           instructions?: string | null
           medications?: Json
@@ -468,6 +746,8 @@ export type Database = {
           created_at?: string
           diagnosis?: string | null
           doctor_id?: string
+          follow_up_date?: string | null
+          hospital_id?: string | null
           id?: string
           instructions?: string | null
           medications?: Json
@@ -487,6 +767,13 @@ export type Database = {
             columns: ["doctor_id"]
             isOneToOne: false
             referencedRelation: "doctors"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "prescriptions_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
             referencedColumns: ["id"]
           },
         ]
@@ -591,6 +878,7 @@ export type Database = {
           created_at: string
           doctor_id: string | null
           expires_at: string
+          hospital_id: string | null
           id: string
           patient_id: string
           payment_id: string | null
@@ -606,6 +894,7 @@ export type Database = {
           created_at?: string
           doctor_id?: string | null
           expires_at?: string
+          hospital_id?: string | null
           id?: string
           patient_id: string
           payment_id?: string | null
@@ -621,6 +910,7 @@ export type Database = {
           created_at?: string
           doctor_id?: string | null
           expires_at?: string
+          hospital_id?: string | null
           id?: string
           patient_id?: string
           payment_id?: string | null
@@ -646,6 +936,13 @@ export type Database = {
             referencedColumns: ["id"]
           },
           {
+            foreignKeyName: "verification_codes_hospital_id_fkey"
+            columns: ["hospital_id"]
+            isOneToOne: false
+            referencedRelation: "hospitals"
+            referencedColumns: ["id"]
+          },
+          {
             foreignKeyName: "verification_codes_payment_id_fkey"
             columns: ["payment_id"]
             isOneToOne: false
@@ -662,7 +959,13 @@ export type Database = {
       generate_verification_code: { Args: never; Returns: string }
     }
     Enums: {
-      app_role: "patient" | "doctor" | "receptionist" | "admin"
+      app_role:
+        | "patient"
+        | "doctor"
+        | "receptionist"
+        | "admin"
+        | "super_admin"
+        | "hospital_admin"
       appointment_status: "pending" | "confirmed" | "completed" | "cancelled"
     }
     CompositeTypes: {
@@ -791,7 +1094,14 @@ export type CompositeTypes<
 export const Constants = {
   public: {
     Enums: {
-      app_role: ["patient", "doctor", "receptionist", "admin"],
+      app_role: [
+        "patient",
+        "doctor",
+        "receptionist",
+        "admin",
+        "super_admin",
+        "hospital_admin",
+      ],
       appointment_status: ["pending", "confirmed", "completed", "cancelled"],
     },
   },
