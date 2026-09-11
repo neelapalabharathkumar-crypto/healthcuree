@@ -31,6 +31,8 @@ import { Route as AiAssistantRouteImport } from './routes/ai-assistant'
 import { Route as AboutRouteImport } from './routes/about'
 import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as HospitalsIndexRouteImport } from './routes/hospitals.index'
+import { Route as HospitalsSlugRouteImport } from './routes/hospitals.$slug'
 import { Route as AuthenticatedSuperAdminRouteImport } from './routes/_authenticated/super-admin'
 import { Route as AuthenticatedRecordsRouteImport } from './routes/_authenticated/records'
 import { Route as AuthenticatedReceptionRouteImport } from './routes/_authenticated/reception'
@@ -154,6 +156,16 @@ const IndexRoute = IndexRouteImport.update({
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const HospitalsIndexRoute = HospitalsIndexRouteImport.update({
+  id: '/hospitals/',
+  path: '/hospitals/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const HospitalsSlugRoute = HospitalsSlugRouteImport.update({
+  id: '/hospitals/$slug',
+  path: '/hospitals/$slug',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const AuthenticatedSuperAdminRoute = AuthenticatedSuperAdminRouteImport.update({
   id: '/super-admin',
   path: '/super-admin',
@@ -259,6 +271,8 @@ export interface FileRoutesByFullPath {
   '/reception': typeof AuthenticatedReceptionRoute
   '/records': typeof AuthenticatedRecordsRoute
   '/super-admin': typeof AuthenticatedSuperAdminRoute
+  '/hospitals/$slug': typeof HospitalsSlugRoute
+  '/hospitals/': typeof HospitalsIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
@@ -295,6 +309,8 @@ export interface FileRoutesByTo {
   '/reception': typeof AuthenticatedReceptionRoute
   '/records': typeof AuthenticatedRecordsRoute
   '/super-admin': typeof AuthenticatedSuperAdminRoute
+  '/hospitals/$slug': typeof HospitalsSlugRoute
+  '/hospitals': typeof HospitalsIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
@@ -333,6 +349,8 @@ export interface FileRoutesById {
   '/_authenticated/reception': typeof AuthenticatedReceptionRoute
   '/_authenticated/records': typeof AuthenticatedRecordsRoute
   '/_authenticated/super-admin': typeof AuthenticatedSuperAdminRoute
+  '/hospitals/$slug': typeof HospitalsSlugRoute
+  '/hospitals/': typeof HospitalsIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
@@ -371,6 +389,8 @@ export interface FileRouteTypes {
     | '/reception'
     | '/records'
     | '/super-admin'
+    | '/hospitals/$slug'
+    | '/hospitals/'
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
@@ -407,6 +427,8 @@ export interface FileRouteTypes {
     | '/reception'
     | '/records'
     | '/super-admin'
+    | '/hospitals/$slug'
+    | '/hospitals'
   id:
     | '__root__'
     | '/'
@@ -444,6 +466,8 @@ export interface FileRouteTypes {
     | '/_authenticated/reception'
     | '/_authenticated/records'
     | '/_authenticated/super-admin'
+    | '/hospitals/$slug'
+    | '/hospitals/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
@@ -469,6 +493,8 @@ export interface RootRouteChildren {
   SitemapDotxmlRoute: typeof SitemapDotxmlRoute
   TermsRoute: typeof TermsRoute
   TestimonialsRoute: typeof TestimonialsRoute
+  HospitalsSlugRoute: typeof HospitalsSlugRoute
+  HospitalsIndexRoute: typeof HospitalsIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -627,6 +653,20 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/hospitals/': {
+      id: '/hospitals/'
+      path: '/hospitals'
+      fullPath: '/hospitals/'
+      preLoaderRoute: typeof HospitalsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/hospitals/$slug': {
+      id: '/hospitals/$slug'
+      path: '/hospitals/$slug'
+      fullPath: '/hospitals/$slug'
+      preLoaderRoute: typeof HospitalsSlugRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/_authenticated/super-admin': {
       id: '/_authenticated/super-admin'
       path: '/super-admin'
@@ -779,6 +819,8 @@ const rootRouteChildren: RootRouteChildren = {
   SitemapDotxmlRoute: SitemapDotxmlRoute,
   TermsRoute: TermsRoute,
   TestimonialsRoute: TestimonialsRoute,
+  HospitalsSlugRoute: HospitalsSlugRoute,
+  HospitalsIndexRoute: HospitalsIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
