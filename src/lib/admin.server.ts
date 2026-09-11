@@ -1,7 +1,7 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export type AppRole = "patient" | "doctor" | "receptionist" | "admin";
+export type AppRole = "patient" | "doctor" | "receptionist" | "admin" | "super_admin" | "hospital_admin";
 
 export async function assertAdmin(supabase: SupabaseClient<any, any, any>, userId: string) {
   const { data, error } = await supabase
