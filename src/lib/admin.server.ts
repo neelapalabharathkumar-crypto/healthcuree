@@ -1,7 +1,7 @@
 import { supabaseAdmin } from "@/integrations/supabase/client.server";
 import type { SupabaseClient } from "@supabase/supabase-js";
 
-export type AppRole = "patient" | "doctor" | "receptionist" | "admin";
+export type AppRole = "patient" | "doctor" | "receptionist" | "admin" | "super_admin" | "hospital_admin";
 
 export async function assertAdmin(supabase: SupabaseClient<any, any, any>, userId: string) {
   const { data, error } = await supabase
@@ -94,8 +94,17 @@ export async function ensureStaffAccount(opts: {
       if (free) {
         await supabaseAdmin.from("doctors").update({ user_id: userId }).eq("id", free.id);
       } else {
+        const { data: hospital } = await supabaseAdmin
+          .from("hospitals")
+          .select("id")
+          .eq("status", "active")
+          .order("created_at", { ascending: true })
+          .limit(1)
+          .maybeSingle();
+        if (!hospital) throw new Error("No hospital exists yet — create a hospital first");
         await supabaseAdmin.from("doctors").insert({
           user_id: userId,
+          hospital_id: hospital.id,
           full_name: opts.fullName,
           specialization: "General Physician",
         });

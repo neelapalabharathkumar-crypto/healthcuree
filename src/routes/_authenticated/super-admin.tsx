@@ -445,7 +445,7 @@ function Field({ label, children }: { label: string; children: React.ReactNode }
   return <div><Label className="text-xs">{label}</Label><div className="mt-1.5">{children}</div></div>;
 }
 
-function Select({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: string[] }) {
+function Select({ value, onChange, options }: { value: string; onChange: (v: string) => void; options: readonly string[] }) {
   return (
     <select className="w-full h-10 rounded-md border border-input bg-background px-3 text-sm"
       value={value} onChange={(e) => onChange(e.target.value)}>
