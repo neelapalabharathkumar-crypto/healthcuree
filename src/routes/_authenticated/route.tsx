@@ -4,7 +4,7 @@ import { Logo } from "@/components/site/Logo";
 import { Button } from "@/components/ui/button";
 import {
   LayoutDashboard, Calendar, FileText, Pill, Bot, CreditCard,
-  Bell, User as UserIcon, LogOut, Menu, X, Droplet, ShieldCheck, ClipboardList, Stethoscope,
+  Bell, User as UserIcon, LogOut, Menu, X, Droplet, ShieldCheck, ClipboardList, Stethoscope, Building2,
 } from "lucide-react";
 import { useState } from "react";
 import { useQueryClient } from "@tanstack/react-query";
@@ -35,7 +35,9 @@ const nav = [
 ] as const;
 
 const staffNav = [
+  { to: "/super-admin", label: "Super Admin", icon: Building2, role: "super_admin" },
   { to: "/admin", label: "Admin Panel", icon: ShieldCheck, role: "admin" },
+  { to: "/admin", label: "Hospital Admin", icon: ShieldCheck, role: "hospital_admin" },
   { to: "/reception", label: "Reception", icon: ClipboardList, role: "receptionist" },
   { to: "/doctor-panel", label: "Doctor Panel", icon: Stethoscope, role: "doctor" },
 ] as const;
