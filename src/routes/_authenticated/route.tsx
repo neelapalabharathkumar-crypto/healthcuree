@@ -77,11 +77,11 @@ function AuthedLayout() {
             );
           })}
           {staffNav
-            .filter((n) => has(n.role) || (n.role !== "admin" && has("admin")))
+            .filter((n) => has(n.role))
             .map((n) => {
               const active = pathname === n.to;
               return (
-                <Link key={n.to} to={n.to} onClick={() => setOpen(false)}
+                <Link key={n.role} to={n.to} onClick={() => setOpen(false)}
                   className={`flex items-center gap-3 rounded-lg px-3 py-2 text-sm font-medium transition-colors ${
                     active ? "bg-gradient-primary text-primary-foreground shadow-soft" : "text-foreground/70 hover:bg-primary/5 hover:text-primary"
                   }`}>
